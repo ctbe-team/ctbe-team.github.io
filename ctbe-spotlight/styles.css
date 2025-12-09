@@ -57,18 +57,6 @@ header {
     background-color: #f9f9f9;
 }
 
-/* Video container styling */
-.video-container {
-    text-align: center;
-    margin: 30px 0;
-}
-
-#video-player {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
 /* Footer styling */
 footer {
     background-color: #2c3e50;
