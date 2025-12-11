@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTBE SMP Countdown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .countdown {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 5px;
+        }
+        .unit {
+            font-size: 1.2em;
+            color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Countdown to S3 Launch</h1>
+    <p class="countdown" id="timer"></p>
+    <script>
+        // Set the date you're counting down to
+        var countDownDate = new Date("Nov 12, 2025 18:00:00 CST").getTime();
+
+        // Update the countdown every 1 second
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="timer"
+            document.getElementById("timer").innerHTML = 
+                days + " <span class='unit'>DAYS</span> " + 
+                hours + " <span class='unit'>HOURS</span> " + 
+                minutes + " <span class='unit'>MINUTES</span> " + 
+                seconds + " <span class='unit'>SECONDS</span>";
+
+            // If the countdown is over, display a message
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "The time has come!";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
