@@ -1,0 +1,187 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>When S3.1?</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0f1115;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.container {
+    max-width: 900px;
+    padding: 2rem;
+}
+
+h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    color: #b0b0b0;
+    margin-bottom: 3rem;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.time-box {
+    background: #181c24;
+    border: 1px solid #2c3440;
+    border-radius: 12px;
+    padding: 1.5rem;
+    min-width: 140px;
+}
+
+.number {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.label {
+    color: #9aa4b2;
+    margin-top: .5rem;
+    text-transform: uppercase;
+}
+
+.launch-time {
+    margin-top: 2rem;
+    color: #888;
+}
+
+.status {
+    margin-top: 2rem;
+    color: #7dd3fc;
+    font-style: italic;
+    min-height: 1.5rem;
+    transition: opacity 0.3s ease;
+}
+
+.live {
+    color: #4ade80;
+    font-size: 3rem;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>When S3.1?</h1>
+
+    <div class="subtitle">
+        CTBE SMP Season 3.1 launches soon™
+    </div>
+
+    <div class="countdown">
+        <div class="time-box">
+            <div id="days" class="number">0</div>
+            <div class="label">Days</div>
+        </div>
+
+        <div class="time-box">
+            <div id="hours" class="number">0</div>
+            <div class="label">Hours</div>
+        </div>
+
+        <div class="time-box">
+            <div id="minutes" class="number">0</div>
+            <div class="label">Minutes</div>
+        </div>
+
+        <div class="time-box">
+            <div id="seconds" class="number">0</div>
+            <div class="label">Seconds</div>
+        </div>
+    </div>
+
+    <div class="launch-time">
+        June 20, 2026 • 4:00 PM CST/CDT
+    </div>
+
+    <div id="status" class="status">
+        Loading status...
+    </div>
+</div>
+
+<script>
+const launchDate = new Date("2026-06-20T16:00:00-05:00");
+
+function updateCountdown() {
+    const now = new Date();
+    const diff = launchDate - now;
+
+    if (diff <= 0) {
+        document.querySelector(".container").innerHTML = `
+            <h1>CTBE SMP S3.1</h1>
+            <div class="live">NOW LIVE</div>
+        `;
+        return;
+    }
+
+    document.getElementById("days").textContent =
+        Math.floor(diff / 1000 / 60 / 60 / 24);
+
+    document.getElementById("hours").textContent =
+        Math.floor(diff / 1000 / 60 / 60) % 24;
+
+    document.getElementById("minutes").textContent =
+        Math.floor(diff / 1000 / 60) % 60;
+
+    document.getElementById("seconds").textContent =
+        Math.floor(diff / 1000) % 60;
+}
+
+let statuses = [];
+
+fetch("status.json")
+.then(r => r.json())
+.then(data => {
+    statuses = data;
+    rotateStatus();
+    setInterval(rotateStatus, 10000);
+});
+
+function rotateStatus() {
+    if (!statuses.length) return;
+
+    const el = document.getElementById("status");
+
+    el.style.opacity = 0;
+
+    setTimeout(() => {
+        el.textContent =
+            statuses[Math.floor(Math.random() * statuses.length)];
+        el.style.opacity = 1;
+    }, 300);
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
+```
