@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>404 Not Found</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0f1115;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.container {
+    max-width: 900px;
+    padding: 2rem;
+}
+
+h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    color: #b0b0b0;
+    margin-bottom: 3rem;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.time-box {
+    background: #181c24;
+    border: 1px solid #2c3440;
+    border-radius: 12px;
+    padding: 1.5rem;
+    min-width: 140px;
+}
+
+.number {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.label {
+    color: #9aa4b2;
+    margin-top: .5rem;
+    text-transform: uppercase;
+}
+
+.launch-time {
+    margin-top: 2rem;
+    color: #888;
+}
+
+.status {
+    margin-top: 2rem;
+    color: #7dd3fc;
+    font-style: italic;
+    min-height: 1.5rem;
+    transition: opacity 0.3s ease;
+}
+
+.footer {
+    margin-top: 3rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.live {
+    color: #4ade80;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.real-page {
+    max-width: 900px;
+    padding: 2rem;
+}
+
+.real-page h1 {
+    color: #4ade80;
+}
+
+.real-page p {
+    margin-top: 1rem;
+    line-height: 1.6;
+    color: #d1d5db;
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="countdownPage">
+    <h1>404 Not Found</h1>
+
+    <div class="subtitle">
+        The requested mainland could not be found.
+    </div>
+
+    <div class="countdown">
+        <div class="time-box">
+            <div id="days" class="number">0</div>
+            <div class="label">Days</div>
+        </div>
+
+        <div class="time-box">
+            <div id="hours" class="number">0</div>
+            <div class="label">Hours</div>
+        </div>
+
+        <div class="time-box">
+            <div id="minutes" class="number">0</div>
+            <div class="label">Minutes</div>
+        </div>
+
+        <div class="time-box">
+            <div id="seconds" class="number">0</div>
+            <div class="label">Seconds</div>
+        </div>
+    </div>
+
+    <div class="launch-time">
+        Mainland access unlocks July 1, 2026 • 12:00 PM CDT
+    </div>
+
+    <div id="status" class="status">
+        Checking mainland availability...
+    </div>
+
+    <div class="footer">
+        nginx/1.24.0
+    </div>
+</div>
+
+<script>
+// ===============================
+// CHANGE THIS DATE ONLY
+// ===============================
+const revealDate = new Date("2026-07-01T12:00:00-05:00");
+
+// ===============================
+// REAL PAGE CONTENT
+// ===============================
+const REAL_PAGE = `
+<div class="real-page">
+    <h1>Mainland Open</h1>
+
+    <div class="live">
+        ACCESS GRANTED
+    </div>
+
+    <p>
+        The Starting Island Initiative has concluded.
+    </p>
+
+    <p>
+        Players may now freely explore, settle, and build on the mainland.
+    </p>
+
+    <p>
+        Thank you for helping build the island community during the opening phase of CTBE SMP Season 3.1.
+    </p>
+</div>
+`;
+
+const statuses = [
+    "Error 404: Mainland not found.",
+    "Island settlement protocol active.",
+    "Mainland access denied.",
+    "Awaiting July 1 authorization.",
+    "Exploration permit required.",
+    "Community development in progress.",
+    "No mainland detected.",
+    "Please continue building on the island.",
+    "Expedition requests require approval.",
+    "Checking for mainland... not found."
+];
+
+function rotateStatus() {
+    const el = document.getElementById("status");
+
+    if (!el) return;
+
+    el.style.opacity = 0;
+
+    setTimeout(() => {
+        el.textContent =
+            statuses[Math.floor(Math.random() * statuses.length)];
+
+        el.style.opacity = 1;
+    }, 300);
+}
+
+function showRealPage() {
+    document.title = "CTBE SMP S3.1";
+    document.body.innerHTML = REAL_PAGE;
+}
+
+function updateCountdown() {
+    const now = new Date();
+    const diff = revealDate - now;
+
+    if (diff <= 0) {
+        showRealPage();
+        return;
+    }
+
+    document.getElementById("days").textContent =
+        Math.floor(diff / 1000 / 60 / 60 / 24);
+
+    document.getElementById("hours").textContent =
+        Math.floor(diff / 1000 / 60 / 60) % 24;
+
+    document.getElementById("minutes").textContent =
+        Math.floor(diff / 1000 / 60) % 60;
+
+    document.getElementById("seconds").textContent =
+        Math.floor(diff / 1000) % 60;
+}
+
+rotateStatus();
+setInterval(rotateStatus, 10000);
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
+
